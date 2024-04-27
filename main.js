@@ -33,6 +33,15 @@ async function setupDiscordSdk() {
 		],
 	});
 
+	console.log("Authorized Discord client...")
+
+	// Check server health
+	const health_res = await fetch("/health", {
+		method: "GET",
+	})
+	const health = await health_res.json();
+	console.log("HEALTH", health)
+
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
 		method: "POST",
@@ -45,12 +54,16 @@ async function setupDiscordSdk() {
 	});
 	const { access_token } = await response.json();
 
+	console.log("RESPONSE:", response)
+	console.log("Retrieve access token...")
+
 	// Authenticate with Discord client (using the access_token)
 	auth = await discordSdk.commands.authenticate({
 		access_token,
 	});
 
 	if (auth == null) {
+		console.log("Authentication with Discord client failed")
 		throw new Error("Authenticate command failed");
 	}
 }
