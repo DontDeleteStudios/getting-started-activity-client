@@ -9,12 +9,12 @@ let auth;
 const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 
 setupDiscordSdk().then(() => {
-  console.log("Discord SDK is authenticated");
+	console.log("Discord SDK is authenticated");
 
-  // We can now make API calls within the scopes we requested in setupDiscordSDK()
-  // Note: the access_token returned is a sensitive secret and should be treated as such
-  appendVoiceChannelName();
-  appendGuildAvatar();
+	// We can now make API calls within the scopes we requested in setupDiscordSDK()
+	// Note: the access_token returned is a sensitive secret and should be treated as such
+	appendVoiceChannelName();
+	appendGuildAvatar();
 });
 
 async function setupDiscordSdk() {
@@ -54,13 +54,6 @@ async function setupDiscordSdk() {
 		throw new Error("Authenticate command failed");
 	}
 }
-
-document.querySelector('#app').innerHTML = `
-	<div>
-		<img src="${rocketLogo}" class="logo" alt="Discord" />
-		<h1>Hello, Worldimg!</h1>
-	</div>
-`;
 
 // Append voice channel name
 async function appendVoiceChannelName() {
@@ -114,3 +107,10 @@ async function appendGuildAvatar() {
 		app.appendChild(guildImg);
 	}
 }
+
+document.querySelector('#app').innerHTML = `
+	<div>
+		<img src="${rocketLogo}" class="logo" alt="Discord" />
+		<h1>Hello, nerd!</h1>
+	</div>
+`;
