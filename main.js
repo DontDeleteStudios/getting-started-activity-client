@@ -111,6 +111,6 @@ async function appendGuildAvatar() {
 document.querySelector('#app').innerHTML = `
 	<div>
 		<img src="${rocketLogo}" class="logo" alt="Discord" />
-		<h1>Hello, nerd!</h1>
+		<h1>Hello from vercel, ya nerd!</h1>
 	</div>
 `;
