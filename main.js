@@ -9,7 +9,7 @@ let auth;
 const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 
 setupDiscordSdk().then(() => {
-	console.log("Discord SDK is authenticated");
+	console.info("Discord SDK is authenticated");
 
 	// We can now make API calls within the scopes we requested in setupDiscordSDK()
 	// Note: the access_token returned is a sensitive secret and should be treated as such
@@ -19,7 +19,7 @@ setupDiscordSdk().then(() => {
 
 async function setupDiscordSdk() {
 	await discordSdk.ready();
-	console.log("Discord SDK is ready");
+	console.info("Discord SDK is ready");
 
 	// Authorize with Discord Client
 	const { code } = await discordSdk.commands.authorize({
@@ -33,29 +33,33 @@ async function setupDiscordSdk() {
 		],
 	});
 
-	console.log("Authorized Discord client...")
+	console.info("Authorized Discord client...")
 
 	// Check server health
 	const health_res = await fetch("/health", {
 		method: "GET",
 	})
 	const health = await health_res.json();
-	console.log("HEALTH", health)
+	
+	console.info("Health check complete...")
+
+	console.info("Retrieving access token...")
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
 		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
+		// headers: {
+		// 	"Content-Type": "application/json",
+		// },
 		body: JSON.stringify({
 			code,
 		}),
 	});
 	const { access_token } = await response.json();
 
-	console.log("RESPONSE:", response)
-	console.log("Retrieve access token...")
+	console.info("Access token retrieved...")
+
+	console.info("Authenticating Discord client w/ access token...")
 
 	// Authenticate with Discord client (using the access_token)
 	auth = await discordSdk.commands.authenticate({
@@ -63,9 +67,11 @@ async function setupDiscordSdk() {
 	});
 
 	if (auth == null) {
-		console.log("Authentication with Discord client failed")
+		console.info("Authentication with Discord client failed")
 		throw new Error("Authenticate command failed");
 	}
+
+	console.info("Discord SDK setup complete...")
 }
 
 // Append voice channel name
