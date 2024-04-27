@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://getting-started-activity-pink.vercel.app:3001',
+        target: 'https://getting-started-activity-server-7e0q9tveg.vercel.app',
         changeOrigin: true,
         secure: false,
         ws: true,
