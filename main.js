@@ -2,7 +2,7 @@ import { DiscordSDK } from "@discord/embedded-app-sdk";
 
 import rocketLogo from '/rocket.png';
 import "./style.css";
-//weeeeeeee
+
 // Will eventually store the authenticated user's access_token
 let auth;
 
