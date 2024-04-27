@@ -39,18 +39,18 @@ async function setupDiscordSdk() {
 	const health_res = await fetch("/health", {
 		method: "GET",
 	})
-	const health = await health_res.json();
+	const health = await health_res
 	
+	console.info("Health response:", health)
 	console.info("Health check complete...")
-
 	console.info("Retrieving access token...")
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
 		method: "POST",
-		// headers: {
-		// 	"Content-Type": "application/json",
-		// },
+		headers: {
+			"Content-Type": "application/json",
+		},
 		body: JSON.stringify({
 			code,
 		}),
