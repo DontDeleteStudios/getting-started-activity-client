@@ -19,6 +19,7 @@ setupDiscordSdk().then(() => {
 
 async function setupDiscordSdk() {
 	await discordSdk.ready();
+
 	console.info("LogDelete: Discord SDK is ready");
 
 	// Authorize with Discord Client
@@ -34,6 +35,17 @@ async function setupDiscordSdk() {
 	});
 
 	console.info("LogDelete: Authorized Discord client...")
+
+	console.info("LogDelete: Performing health check on server...")
+
+	// Health check
+	const health_res = await fetch("/health", {
+		method: "GET",
+	})
+	const { health } = await health_res.json();
+	console.info("Server Health: ", health)
+
+	console.info("LogDelete: Retrieve access token...")
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
