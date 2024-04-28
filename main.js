@@ -9,7 +9,7 @@ let auth;
 const discordSdk = new DiscordSDK(import.meta.env.VITE_DISCORD_CLIENT_ID);
 
 setupDiscordSdk().then(() => {
-	console.info("Discord SDK is authenticated");
+	console.info("LogDelete: Discord SDK is authenticated");
 
 	// We can now make API calls within the scopes we requested in setupDiscordSDK()
 	// Note: the access_token returned is a sensitive secret and should be treated as such
@@ -19,7 +19,7 @@ setupDiscordSdk().then(() => {
 
 async function setupDiscordSdk() {
 	await discordSdk.ready();
-	console.info("Discord SDK is ready");
+	console.info("LogDelete: Discord SDK is ready");
 
 	// Authorize with Discord Client
 	const { code } = await discordSdk.commands.authorize({
@@ -33,7 +33,7 @@ async function setupDiscordSdk() {
 		],
 	});
 
-	console.info("Authorized Discord client...")
+	console.info("LogDelete: Authorized Discord client...")
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
@@ -47,9 +47,9 @@ async function setupDiscordSdk() {
 	});
 	const { access_token } = await response.json();
 
-	console.info("Access token retrieved...")
+	console.info("LogDelete: Access token retrieved...")
 
-	console.info("Authenticating Discord client w/ access token...")
+	console.info("LogDelete: Authenticating Discord client w/ access token...")
 
 	// Authenticate with Discord client (using the access_token)
 	auth = await discordSdk.commands.authenticate({
@@ -57,11 +57,11 @@ async function setupDiscordSdk() {
 	});
 
 	if (auth == null) {
-		console.info("Authentication with Discord client failed")
+		console.info("LogDelete: Authentication with Discord client failed")
 		throw new Error("Authenticate command failed");
 	}
 
-	console.info("Discord SDK setup complete...")
+	console.info("LogDelete: Discord SDK setup complete...")
 }
 
 // Append voice channel name
