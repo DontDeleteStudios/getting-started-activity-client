@@ -34,18 +34,19 @@ async function setupDiscordSdk() {
 		],
 	});
 
-	console.info("LogDelete: Authorized Discord client...")
+	console.info("LogDelete: Authorized Discord client")
 
-	console.info("LogDelete: Performing health check on server...")
+	console.info("LogDelete: Performing health check on server")
 
 	// Health check
 	const health_res = await fetch("/health", {
 		method: "GET",
 	})
+	console.info("Health check complete")
 	const { health } = await health_res.json();
-	console.info("Server Health: ", health)
+	console.info("Health Results: ", health)
 
-	console.info("LogDelete: Retrieve access token...")
+	console.info("LogDelete: Retrieve access token")
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
@@ -59,9 +60,9 @@ async function setupDiscordSdk() {
 	});
 	const { access_token } = await response.json();
 
-	console.info("LogDelete: Access token retrieved...")
+	console.info("LogDelete: Access token retrieved")
 
-	console.info("LogDelete: Authenticating Discord client w/ access token...")
+	console.info("LogDelete: Authenticating Discord client w/ access token")
 
 	// Authenticate with Discord client (using the access_token)
 	auth = await discordSdk.commands.authenticate({
@@ -73,7 +74,7 @@ async function setupDiscordSdk() {
 		throw new Error("Authenticate command failed");
 	}
 
-	console.info("LogDelete: Discord SDK setup complete...")
+	console.info("LogDelete: Discord SDK setup complete")
 }
 
 // Append voice channel name
