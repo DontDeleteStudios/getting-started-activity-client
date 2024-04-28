@@ -37,7 +37,7 @@ async function setupDiscordSdk() {
 
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
-		// method: "POST",
+		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
