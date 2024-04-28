@@ -38,16 +38,17 @@ async function setupDiscordSdk() {
 
 	console.info("LogDelete: Performing health check on server")
 
-	// Health check
-	const health_res = await fetch("/health", {
-		method: "GET",
-	})
-	console.info("Health check complete")
-	const { health } = await health_res.json();
-	console.info("Health Results: ", health)
+	try {
+		const health_res = await fetch("/health", { method: "GET" });
+		console.info("Health check complete");
+		const { health } = await health_res.json();
+		console.info("Health Results: ", health);
+	} catch (error) {
+		console.error("Error in health check:", error);
+		// Handle the error here, e.g., display an error message to the user
+	}
 
 	console.info("LogDelete: Retrieve access token")
-
 	// Retrieve an access_token from your activity's server
 	const response = await fetch("/api/token", {
 		method: "POST",
