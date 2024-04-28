@@ -17,6 +17,23 @@ setupDiscordSdk().then(() => {
 	appendGuildAvatar();
 });
 
+async function checkHealth() {
+	try {
+	  const health_res = await fetch('/health', { method: 'GET' });
+  
+	  if (!health_res.ok) {
+		throw new Error(`Health check failed: ${health_res.status} ${health_res.statusText}`);
+	  }
+  
+	  const { health } = await health_res.json();
+	  console.info('Health Results: ', health);
+	} catch (error) {
+	  console.error('Error in health check:', error);
+	  // Handle the error here, e.g., display an error message to the user
+	}
+}
+  
+
 async function setupDiscordSdk() {
 	await discordSdk.ready();
 
@@ -38,15 +55,7 @@ async function setupDiscordSdk() {
 
 	console.info("LogDelete: Performing health check on server")
 
-	try {
-		const health_res = await fetch("/health", { method: "GET" });
-		console.info("Health check complete");
-		const { health } = await health_res.json();
-		console.info("Health Results: ", health);
-	} catch (error) {
-		console.error("Error in health check:", error);
-		// Handle the error here, e.g., display an error message to the user
-	}
+	checkHealth();
 
 	console.info("LogDelete: Retrieve access token")
 	// Retrieve an access_token from your activity's server
