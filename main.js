@@ -32,7 +32,29 @@ async function checkHealth() {
 	  // Handle the error here, e.g., display an error message to the user
 	}
 }
+
+async function getAccessToken(code) {
+	try {
+	  const response = await fetch("/api/token", {
+		method: "POST",
+		headers: {
+		  "Content-Type": "application/json",
+		},
+		body: JSON.stringify({ code }),
+	  });
   
+	  if (!response.ok) {
+		throw new Error(`Failed to retrieve access token: ${response.status} ${response.statusText}`);
+	  }
+  
+	  const { access_token } = await response.json();
+	  return access_token;
+	} catch (error) {
+	  console.error("Error retrieving access token:", error);
+	  // Handle the error here, e.g., display an error message to the user
+	  throw error; // Optional: Rethrow the error for further handling
+	}
+}
 
 async function setupDiscordSdk() {
 	await discordSdk.ready();
@@ -59,16 +81,15 @@ async function setupDiscordSdk() {
 
 	console.info("LogDelete: Retrieve access token")
 	// Retrieve an access_token from your activity's server
-	const response = await fetch("/api/token", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			code,
-		}),
-	});
-	const { access_token } = await response.json();
+	getAccessToken(code)
+		.then((accessToken) => {
+			console.log("Access token:", accessToken);
+			// Use the access token for further operations
+		})
+		.catch((error) => {
+			console.error("Error occurred:", error);
+			// Handle the error here, e.g., display an error message to the user
+		});
 
 	console.info("LogDelete: Access token retrieved")
 
